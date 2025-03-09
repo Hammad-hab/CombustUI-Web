@@ -558,6 +558,24 @@
       .highlight-function { color: #50fa7b; }
       .highlight-var { color: #8be9fd; }
       .highlight-comment { color: #6272a4; }
+      .github-btn {
+        color: white;
+        position: fixed;
+        width: fit-content;
+        align-items: center;
+        gap: 0.5rem;
+        z-index: 50;
+        font-size: 50px;
+        border-radius: 100px;
+        transition: all 0.1s;
+        margin: 10px;
+      }
+
+      .github-btn:hover {
+        background-color: transparent;
+        color: white;
+        filter:contrast(0);
+      }
     </style>
   </head>
   <body>
@@ -576,13 +594,17 @@
       </nav>
     </header>
     <main>
+        <a href="https://github.com/Hammad-hab/CombustUI" target="_blank" class="github-btn">
+            <i class="fa-brands fa-github"></i>
+          </a>
+        
       <section class="hero">
         <h1>Combust<span>UI</span> <br>A Fast and Modern UI Library</h1>
         <p>Build efficient, blazingly fast interfaces in Mojo.</p>
         <a href="#installation" class="btn">Get Started</a>
         <a href="#features" class="btn secondary-btn">Learn More</a>
       </section>
-
+  
       <section id="about" class="container">
         <h2 class="section-title">What is CombustUI?</h2>
         <div class="about-grid">
