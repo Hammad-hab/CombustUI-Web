@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CombustUI - Modern Mojo UI Library</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <style>
+      :root {
+        --primary: #ff7700;
+        --primary-dark: #e66a00;
+        --dark: #1a1a1a;
+        --dark-accent: #262626;
+        --gray: #333;
+        --light: #ffffff;
+        --code-bg: #111111;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+        background-color: var(--dark);
+        color: var(--light);
+        line-height: 1.6;
+      }
+
+      header {
+        background-color: var(--dark);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      }
+
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: auto;
+        padding: 1rem 2rem;
+      }
+
+      .logo {
+        font-size: 1.8rem;
+        font-weight: 800;
+        color: var(--primary);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .logo-icon {
+        color: var(--primary);
+      }
+
+      nav ul {
+        list-style: none;
+        display: flex;
+        gap: 2rem;
+      }
+
+      nav ul li a {
+        color: var(--light);
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.2s;
+        position: relative;
+        padding: 0.5rem 0;
+      }
+
+      nav ul li a:after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: 0;
+        left: 0;
+        background-color: var(--primary);
+        transition: width 0.3s;
+      }
+
+      nav ul li a:hover {
+        color: var(--primary);
+      }
+
+      nav ul li a:hover:after {
+        width: 100%;
+      }
+
+      .hero {
+        padding: 8rem 2rem;
+        background: linear-gradient(135deg, var(--dark-accent) 0%, var(--dark) 100%);
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at 20% 70%, rgba(255, 119, 0, 0.15) 0%, transparent 50%);
+      }
+
+      .hero h1 {
+        font-size: 3.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        line-height: 1.2;
+      }
+
+      .hero h1 span {
+        color: var(--primary);
+      }
+
+      .hero p {
+        font-size: 1.3rem;
+        margin-bottom: 2.5rem;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+        opacity: 0.9;
+      }
+
+      .btn {
+        background-color: var(--primary);
+        color: var(--dark);
+        padding: 0.8rem 2rem;
+        font-size: 1.1rem;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 700;
+        display: inline-block;
+        transition: all 0.3s;
+        border: 2px solid var(--primary);
+      }
+
+      .btn:hover {
+        background-color: transparent;
+        color: var(--primary);
+      }
+
+      .secondary-btn {
+        background-color: transparent;
+        border: 2px solid var(--primary);
+        color: var(--primary);
+        margin-left: 1rem;
+      }
+
+      .secondary-btn:hover {
+        background-color: var(--primary);
+        color: var(--dark);
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 4rem 2rem;
+      }
+
+      .section-title {
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin-bottom: 3rem;
+        text-align: center;
+        color: var(--primary);
+        position: relative;
+      }
+
+      .section-title:after {
+        content: '';
+        display: block;
+        width: 70px;
+        height: 4px;
+        background: var(--primary);
+        margin: 1rem auto 0;
+        border-radius: 2px;
+      }
+
+      .about-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        align-items: center;
+      }
+
+      .about-content h2 {
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+        color: var(--primary);
+      }
+
+      .about-content p {
+        margin-bottom: 1rem;
+        font-size: 1.1rem;
+      }
+
+      .about-image {
+        background: url('/logo.jpeg');
+        border-radius: 10px;    
+        overflow: hidden;
+        position: relative;
+        box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+        aspect-ratio: 16 / 9;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-size: cover;
+        background-position-y: center;
+      }
+
+      .about-image img {
+        max-width: 100%;
+        display: block;
+      }
+
+      .feature-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+      }
+
+      .card {
+        background-color: var(--gray);
+        border-radius: 10px;
+        padding: 2rem;
+        transition: transform 0.3s, box-shadow 0.3s;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .card-icon {
+        width: 70px;
+        height: 70px;
+        background-color: rgba(255, 119, 0, 0.1);
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        font-size: 1.8rem;
+        color: var(--primary);
+        transition: all 0.3s;
+      }
+
+      .card:hover .card-icon {
+        background-color: var(--primary);
+        color: var(--dark);
+      }
+
+      .card h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        color: var(--light);
+      }
+
+      .card p {
+        font-size: 1rem;
+        color: rgba(255, 255, 255, 0.8);
+        flex: 1;
+      }
+
+      .installation-section {
+        background-color: var(--dark-accent);
+        border-radius: 10px;
+        padding: 3rem;
+        margin-top: 4rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .installation-section ol {
+        margin: 2rem 0;
+        padding-left: 1.5rem;
+      }
+
+      .installation-section li {
+        margin-bottom: 1rem;
+        font-size: 1.1rem;
+      }
+
+      .installation-section pre {
+        background-color: var(--code-bg);
+        padding: 1.2rem;
+        border-radius: 6px;
+        overflow-x: auto;
+        font-family: 'Fira Code', monospace;
+        margin: 1rem 0;
+        border-left: 4px solid var(--primary);
+      }
+
+      code {
+        font-family: 'Fira Code', monospace;
+        background-color: var(--code-bg);
+        padding: 0.2rem 0.4rem;
+        border-radius: 4px;
+        font-size: 0.9rem;
+      }
+
+      .demo-section {
+        margin-top: 4rem;
+      }
+
+      .demo-code {
+        background-color: var(--code-bg);
+        padding: 1.5rem;
+        border-radius: 10px;
+        overflow-x: auto;
+        font-family: 'Fira Code', monospace;
+        border-left: 4px solid var(--primary);
+        margin-top: 2rem;
+      }
+
+      .demo-code code {
+        color: #e0e0e0;
+        background: none;
+        padding: 0;
+      }
+
+      .comment {
+        color: #767676;
+      }
+
+      .keyword {
+        color: #ff79c6;
+      }
+
+      .string {
+        color: #f1fa8c;
+      }
+
+      .function {
+        color: #50fa7b;
+      }
+
+      .variable {
+        color: #8be9fd;
+      }
+
+      .roadmap {
+        margin-top: 4rem;
+      }
+
+      .roadmap-list {
+        list-style: none;
+        padding: 0;
+        margin-top: 2rem;
+      }
+
+      .roadmap-item {
+        background-color: var(--gray);
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        position: relative;
+        padding-left: 3.5rem;
+      }
+
+      .roadmap-item:before {
+        content: '\f192';
+        font-family: 'Font Awesome 6 Free';
+        font-weight: 900;
+        color: var(--primary);
+        position: absolute;
+        left: 1.5rem;
+        font-size: 1.2rem;
+      }
+
+      .roadmap-item h4 {
+        font-size: 1.3rem;
+        margin-bottom: 0.5rem;
+        color: var(--primary);
+      }
+
+      .roadmap-item p {
+        margin: 0;
+        color: rgba(255, 255, 255, 0.8);
+      }
+
+      .profile-section {
+        background-color: var(--dark-accent);
+        padding: 3rem;
+        border-radius: 10px;
+        margin-top: 4rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .profile-pic {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        background-color: var(--gray);
+        margin-bottom: 2rem;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 4rem;
+        color: var(--primary);
+      }
+
+      .profile-content h3 {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+        color: var(--primary);
+      }
+
+      .profile-content p {
+        font-size: 1.1rem;
+        max-width: 800px;
+        margin: 0 auto 1.5rem;
+      }
+
+      .skills {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem;
+        margin-top: 1.5rem;
+      }
+
+      .skill-tag {
+        background-color: rgba(255, 119, 0, 0.1);
+        color: var(--primary);
+        padding: 0.4rem 1rem;
+        border-radius: 50px;
+        font-size: 0.9rem;
+        font-weight: 600;
+      }
+
+      footer {
+        background-color: var(--dark);
+        padding: 4rem 2rem;
+        text-align: center;
+        border-top: 1px solid var(--gray);
+      }
+
+      .footer-logo {
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--primary);
+        margin-bottom: 1.5rem;
+      }
+
+      .footer-links {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .footer-links a {
+        color: var(--light);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+
+      .footer-links a:hover {
+        color: var(--primary);
+      }
+
+      .social-links {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .social-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: var(--gray);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--light);
+        font-size: 1.2rem;
+        transition: all 0.3s;
+      }
+
+      .social-icon:hover {
+        background-color: var(--primary);
+        color: var(--dark);
+        transform: translateY(-3px);
+      }
+
+      .copyright {
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.6);
+      }
+
+      @media (max-width: 992px) {
+        .about-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .about-image {
+          order: -1;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .hero h1 {
+          font-size: 2.5rem;
+        }
+
+        nav {
+          padding: 1rem;
+          flex-direction: column;
+          gap: 1rem;
+        }
+
+        nav ul {
+          gap: 1rem;
+        }
+
+        .installation-section {
+          padding: 2rem;
+        }
+
+        .btn {
+          display: block;
+          margin: 0 auto 1rem;
+          max-width: 250px;
+        }
+
+        .secondary-btn {
+          margin-left: 0;
+        }
+      }
+
+      /* Syntax highlighting for demo */
+      .highlight-keyword { color: #ff79c6; }
+      .highlight-string { color: #f1fa8c; }
+      .highlight-function { color: #50fa7b; }
+      .highlight-var { color: #8be9fd; }
+      .highlight-comment { color: #6272a4; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="logo">
+          <i class="fa-solid fa-fire logo-icon"></i> CombustUI
+        </div>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#installation">Installation</a></li>
+          <li><a href="#demo">Demo</a></li>
+          <li><a href="#roadmap">Roadmap</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <section class="hero">
+        <h1>Combust<span>UI</span> <br>A Fast and Modern UI Library</h1>
+        <p>Build efficient, blazingly fast interfaces in Mojo.</p>
+        <a href="#installation" class="btn">Get Started</a>
+        <a href="#features" class="btn secondary-btn">Learn More</a>
+      </section>
+
+      <section id="about" class="container">
+        <h2 class="section-title">What is CombustUI?</h2>
+        <div class="about-grid">
+          <div class="about-content">
+            <p>CombustUI is a GUI development library written in Mojo and built on top of the traditional C++ Library, FLTK (Fast Light Toolkit).</p>
+            <p>It's designed to be lightweight, high-performance, and to streamline your development process with direct FLTK bindings for precise control.</p>
+            <p>CombustUI follows the principle of simplicity - it's simple yet sufficiently low-level, allowing developers to create efficient and responsive user interfaces with minimal overhead.</p>
+          </div>
+          <div class="about-image">
+            <!-- <i class="fa-solid fa-fire" style="font-size: 5rem; color: var(--primary);"></i> -->
+          </div>
+        </div>
+      </section>
+
+      <section id="features" class="container">
+        <h2 class="section-title">Key Features</h2>
+        <div class="feature-cards">
+          <div class="card">
+            <div class="card-icon">
+              <i class="fa-solid fa-microchip"></i>
+            </div>
+            <h3>Low-Level Control</h3>
+            <p>Direct invocation of FLTK functions for precise GUI management. It literally exposes pointers to enable programmers to access the memory.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon">
+              <i class="fa-solid fa-wand-magic-sparkles"></i>
+            </div>
+            <h3>Simple Yet Powerful</h3>
+            <p>FLTK isn't the most diverse library nor is it the most popular. However, simplicity is the main selling point. CombustUI builds on the same principles.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon">
+              <i class="fa-solid fa-scale-balanced"></i>
+            </div>
+            <h3>MIT License</h3>
+            <p>Free and open-source under the permissive MIT license, allowing you to use CombustUI in both personal and commercial projects.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon">
+              <i class="fa-solid fa-bolt"></i>
+            </div>
+            <h3>Direct FLTK Calls</h3>
+            <p>Make direct calls to FLTK functions, giving you full access to the underlying toolkit capabilities.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon">
+              <i class="fa-solid fa-feather"></i>
+            </div>
+            <h3>Super Lightweight</h3>
+            <p>Minimal overhead and small footprint make CombustUI perfect for applications where performance and efficiency are critical.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon">
+              <i class="fa-solid fa-fingerprint"></i>
+            </div>
+            <h3>Identifier System</h3>
+            <p>A system that allows the app to specify certain IDs to different widgets so that they can be selected later upon requirement.</p>
+          </div>
+        </div>
+
+        <div class="installation-section">
+          <h3 class="section-title">Current State Of CombustUI</h3>
+          <ul style="list-style-type: disc; margin-left: 1.5rem; margin-top: 1rem;">
+            <li><strong>Basic Event Handling:</strong> Supports fundamental event-driven programming paradigms.</li>
+            <li><strong>Essential Widgets:</strong> Provides core GUI components such as input boxes, buttons, windows, and grids.</li>
+            <li><strong>An Identifier System:</strong> A system that allows the app to specify certain IDs to different widgets so that they can be selected later upon requirement.</li>
+          </ul>
+          
+          <h3 class="section-title">Why Not Built From The Ground Up?</h3>
+
+          <ul style="list-style-type: disc; margin-left: 1.5rem; margin-top: 1rem;">
+            <li><strong>No ecosystem:</strong> Starting from scratch would mean no existing ecosystem.</li>
+            <li><strong>Everything would need to be built from scratch:</strong> Every component would require implementation.</li>
+            <li><strong>Cross Platform compatibility:</strong> Would need to be implemented separately.</li>
+            <li><strong>Extremely time consuming:</strong> Not immediately fruitful and would be complex.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="installation" class="container">
+        <h2 class="section-title">Installation</h2>
+        <div class="installation-section">
+          <p>Follow these steps to install CombustUI in your project:</p>
+          <ol>
+            <li>Ensure Mojo is installed on your machine.</li>
+            <li>Run the following command to download and set up the script:</li>
+            <pre><code>curl https://raw.githubusercontent.com/Hammad-hab/CombustUI/main/create_new_app.sh -o ignite_app.sh && chmod +x ignite_app.sh && sudo mv ./ignite_app.sh /usr/local/bin/ignite_app</code></pre>
+            <li>Initialize a new CombustUI project:</li>
+            <pre><code>ignite_app MyApp</code></pre>
+            <li>Navigate to your project directory:</li>
+            <pre><code>cd MyApp</code></pre>
+            <li>Build and run your application using Mojo:</li>
+            <pre><code>magic shell</code></pre>
+          </ol>
+        </div>
+      </section>
+
+      <section id="demo" class="container demo-section">
+        <h2 class="section-title">Window Demo</h2>
+        <p>Here's a simple example of creating a window with CombustUI:</p>
+        <div class="demo-code">
+<pre><code><span class="highlight-keyword">from</span> mjui.fltk_bindings.bindings <span class="highlight-keyword">import</span> *
+<span class="highlight-keyword">from</span> mjui._app <span class="highlight-keyword">import</span> Application
+
+<span class="highlight-keyword">fn</span> <span class="highlight-function">main</span>() <span class="highlight-keyword">raises</span>:
+   <span class="highlight-keyword">var</span> <span class="highlight-var">app</span> = Application()
+
+   <span class="highlight-keyword">var</span> <span class="highlight-var">window</span> = mjuiSpawnWindow(1000, 500, 1, 0, 0, <span class="highlight-string">"Hello CombustUI"</span>.as_bytes())
+
+   mjuiShowWidget(window)
+
+   app.markWindowPTRAsMain(window)
+   app.execute()</code></pre>
+        </div>
+
+        <div class="installation-section" style="margin-top: 2rem;">
+          <h3>Understanding the Window Parameters</h3>
+          <p>Essentially what <code>markWindowPTRAsMain</code> does is that it tells the app which widget (or window) is the main widget (or window) so that the app can exit once the widget or window is not visible or has been destroyed.</p>
+          <p>Another thing you might notice is the <code>as_bytes</code> method at the end of the title literal. For some reason, passing strings from Mojo to C wasn't actually working correctly. I'm currently investigating why this problem occurs, but essentially, the string gets corrupted and deformed, as it is passed from the Mojo end, to the C ffi functions.</p>
+          
+          <pre><code>var window = mjuiSpawnWindow(1000, 500, 1, 0, 0, "Hello CombustUI".as_bytes())
+  ^     ^    ^  ^  ^
+  0     1    2  3  4
+0. Width
+1. Height
+2. Resize
+3. No Frame (Setting this to true will remove the title bar)
+4. Full Screen mode</code></pre>
+        </div>
+      </section>
+
+      <section id="roadmap" class="container roadmap">
+        <h2 class="section-title">Roadmap</h2>
+        <p>Here's where CombustUI is headed in future releases:</p>
+        
+        <ul class="roadmap-list">
+          <li class="roadmap-item">
+            <h4>Struct Based API</h4>
+            <p>As you can see, the current state of CombustUI is mostly functional and unsafe since the programmer gets limitless access to widget pointers. We're working on a more structured approach.</p>
+          </li>
+          <li class="roadmap-item">
+            <h4>Adding more Widgets</h4>
+            <p>Currently, CombustUI has a really sparse toolkit. That being said, more widgets will be added, including ones that aren't just bindings of FLTK widgets, but are built entirely in Mojo.</p>
+          </li>
+          <li class="roadmap-item">
+            <h4>Focus on Core mechanics first</h4>
+            <p>Before any of the aforementioned can be added, the core mechanics must be implemented. For example, for CombustUI to have its own custom, non-FLTK widgets, it must have access to the core drawing API of FLTK.</p>
+          </li>
+          <li class="roadmap-item">
+            <h4>Updates to ignite_app</h4>
+            <p>Ignite app is a small script which makes initializing CombustUI applications much more feasible. Over the next few versions, ignite app will get major updates and will mature as a CLI tool.</p>
+          </li>
+        </ul>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-logo">CombustUI</div>
+      <div class="footer-links">
+        <a href="#about">About</a>
+        <a href="#features">Features</a>
+        <a href="#installation">Installation</a>
+        <a href="#demo">Demo</a>
+        <a href="#roadmap">Roadmap</a>
+      </div>
+      <div class="social-links">
+        <a href="#" class="social-icon"><i class="fa-brands fa-github"></i></a>
+        <a href="#" class="social-icon"><i class="fa-brands fa-twitter"></i></a>
+        <a href="#" class="social-icon"><i class="fa-brands fa-discord"></i></a>
+      </div>
+      <p class="copyright">&copy; 2025 CombustUI. All rights reserved.</p>
+    </footer>
+  </body>
+</html>
